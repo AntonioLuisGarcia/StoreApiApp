@@ -13,13 +13,13 @@ interface ProductApi{
     suspend fun fetchProduct(@Path("id") id:Int): ProductApiModel
 
     @GET("products")
-    suspend fun fetchAllProducts(): ProductListResponse
+    suspend fun fetchAllProducts(): List<ProductApiModel>
 }
 
 class ProductRepository private constructor(private val api:ProductApi) {
 
-    private val _products = MutableLiveData<ProductListApiModel>()
-    val product: LiveData<ProductListApiModel>
+    private val _products = MutableLiveData<List<ProductApiModel>>()
+    val product: LiveData<List<ProductApiModel>>
         get() = _products
 
     companion object{
@@ -39,11 +39,6 @@ class ProductRepository private constructor(private val api:ProductApi) {
     suspend fun fetchAll(){
         val productsResponse = api.fetchAllProducts()
 
-        val listOfProducts = mutableListOf<ProductApiModel>()
-        productsResponse.productsResponse.forEach{
-            listOfProducts.add(it)
-        }
-
-        _products.postValue(ProductListApiModel(listOfProducts))
+        _products.postValue(productsResponse)
     }
 }

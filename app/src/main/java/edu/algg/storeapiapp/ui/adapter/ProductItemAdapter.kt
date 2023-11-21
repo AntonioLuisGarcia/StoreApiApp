@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import edu.algg.storeapiapp.data.api.ProductApiModel
 import edu.algg.storeapiapp.databinding.ProductItemLayoutBinding
 
@@ -13,8 +14,9 @@ class ProductItemAdapter():ListAdapter<ProductApiModel, ProductItemAdapter.Produ
 
     class ProductViewHolder(private val binding: ProductItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
         fun showProduct(product: ProductApiModel){
-            binding.productId.text =  product.id.toString()
             binding.productName.text = product.title
+            binding.productPrice.text = product.price.toString()
+            binding.productImage.load(product.image)
         }
     }
 

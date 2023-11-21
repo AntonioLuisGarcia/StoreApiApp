@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_navigation.xml">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/product_list_id">>
+
+    <fragment
+        android:id="@+id/product_list_id"
+        android:name="edu.algg.storeapiapp.ui.list.ProductListFragment"
+        android:label="fragment_label"
+        tools:layout="@layout/fragment_product_list"/>
 
 </navigation>

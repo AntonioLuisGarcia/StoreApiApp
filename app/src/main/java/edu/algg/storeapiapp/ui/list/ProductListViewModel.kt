@@ -16,17 +16,8 @@ class ProductListViewModel(): ViewModel() {
     val productUi: LiveData<List<ProductApiModel>>
         get() = _productUi
 
-    private val observer = Observer<ProductListApiModel>{
-        _productUi.value = it.products.map{
-                ProductApiModel(it.id,
-                    it.title,
-                    it.price,
-                    it.description,
-                    it.category,
-                    it.image,
-                    it.rating
-                )
-        }
+    private val observer = Observer<List<ProductApiModel>> {
+        _productUi.value = it
     }
 
     init{
