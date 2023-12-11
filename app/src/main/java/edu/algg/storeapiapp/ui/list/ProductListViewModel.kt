@@ -1,27 +1,29 @@
 package edu.algg.storeapiapp.ui.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.algg.storeapiapp.data.api.Product
-import edu.algg.storeapiapp.data.api.ProductApiModel
-import edu.algg.storeapiapp.data.api.ProductListApiModel
-import edu.algg.storeapiapp.data.api.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import edu.algg.storeapiapp.data.repository.ProductRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.io.IOException
+import javax.inject.Inject
 
-class ProductListViewModel(): ViewModel() {
-    private val repository =  ProductRepository.getInstance()
-    private val _productUi = MutableLiveData<List<Product>>()
-    val productUi: LiveData<List<Product>>
-        get() = _productUi
+@HiltViewModel
+class ProductListViewModel @Inject constructor(private val repository: ProductRepository): ViewModel() {
 
-    private val observer = Observer<List<Product>> {
-        _productUi.value = it
-    }
+    private val _uiState = MutableStateFlow(ProductListUiState(listOf()))
+    val uiState: StateFlow<ProductListUiState>
+        get() = _uiState.asStateFlow()
 
-    init{
+    /*private val observer = Observer<List<Product>> {
+        _uiState.value = it
+    }*/
+
+    /*init{
         fetch()
     }
 
@@ -35,5 +37,23 @@ class ProductListViewModel(): ViewModel() {
     override fun onCleared(){
         super.onCleared()
         repository.product.removeObserver(observer)
+    }*/
+
+    init{
+
+        viewModelScope.launch {
+            try{
+                repository.refreshList()
+            }
+            catch (e:IOException){
+                _uiState.value = _uiState.value.copy(errorMessage = e.message!!)
+            }
+        }
+
+        viewModelScope.launch {
+            repository.product.collect{
+                _uiState.value = ProductListUiState(it)
+            }
+        }
     }
 }

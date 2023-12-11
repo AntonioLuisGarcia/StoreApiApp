@@ -16,7 +16,7 @@ class ProductRepository @Inject constructor(
     private val dbRepository: ProductDBRepository,
     private val apiRepository: ProductApiRepository
 ) {
-    val pokemon: Flow<List<Product>>
+    val product: Flow<List<Product>>
         get() {
 
             val list = dbRepository.allProduct.map {
