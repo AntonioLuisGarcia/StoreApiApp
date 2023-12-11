@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 
 @Database(entities = [ProductEntity::class], version = 1)
-@TypeConverters(RatingConverter::class)
 abstract class ProductDatabase(): RoomDatabase() {
 
     abstract fun productDao(): ProductDao
@@ -18,7 +16,8 @@ abstract class ProductDatabase(): RoomDatabase() {
 
         fun getInstance(context: Context): ProductDatabase {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+                INSTANCE ?: buildDatabase(context).also {
+                    db-> INSTANCE =db }
             }
         }
 

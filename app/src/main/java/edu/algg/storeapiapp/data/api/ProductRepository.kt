@@ -12,45 +12,37 @@ interface ProductResponseApi{
     suspend fun fetchProduct(@Path("id") id:Int): ProductApiModel
 
     @GET("products")
-    suspend fun fetchAllProducts(): ProductListApiModel
+    suspend fun fetchAllProducts(): ProductListResponse
 }
 
 class ProductRepository private constructor(private val api:ProductResponseApi) {
 
-    private val _products = MutableLiveData<List<Product>>()
-    val product: LiveData<List<Product>>
-        get() = _products
 
-    companion object{
-        private var _INSTANCE: ProductRepository ?= null
-        fun getInstance(): ProductRepository{
 
-            val retrofit = Retrofit.Builder()
+            private val retrofit = Retrofit.Builder()
                 .baseUrl("https://fakestoreapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-            val productApi = retrofit.create(ProductResponseApi::class.java)
-            _INSTANCE = _INSTANCE ?: ProductRepository(productApi)
-            return _INSTANCE!!
-        }
-    }
+            private val productApi = retrofit.create(ProductResponseApi::class.java)
 
-    suspend fun fetchAll(){
+
+
+    suspend fun fetchAll(): List<ProductApiModel> {
         val productsListResponse = api.fetchAllProducts()
 
-        val productsListWithRating = mutableListOf<Product>()
-        productsListResponse.products.forEach{p ->
-            productsListWithRating.add(Product(
-                p.id,
-                p.title,
-                p.price,
-                p.description,
-                p.category,
-                p.image,
-                p.rate,
-                p.count
-            ))
+        val productsListWithRating = productsListResponse.productsResponse.map { productResponse ->
+            ProductApiModel(
+                id = productResponse.id,
+                title = productResponse.title,
+                price = productResponse.price,
+                description = productResponse.description,
+                category = productResponse.category,
+                image = productResponse.image,
+                rate = productResponse.rating.rate,
+                count = productResponse.rating.count
+            )
         }
-        _products.postValue(productsListWithRating)
+
+        return productsListWithRating
     }
 }

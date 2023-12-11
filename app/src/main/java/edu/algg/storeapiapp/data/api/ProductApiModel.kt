@@ -2,6 +2,20 @@ package edu.algg.storeapiapp.data.api
 
 import edu.algg.storeapiapp.data.db.ProductEntity
 
+data class ProductResponse(
+    val id:Int,
+    val title:String,
+    val price:Double,
+    val description:String,
+    val category: String,
+    val image:String,
+    val rating:Rating,
+)
+
+data class ProductListResponse(
+    val productsResponse: List<ProductResponse>
+)
+
 data class ProductApiModel(
     val id:Int,
     val title:String,
@@ -71,3 +85,4 @@ fun List<ProductApiModel>.asEntityModel(): List<ProductEntity> {
         )
     }
 }
+
