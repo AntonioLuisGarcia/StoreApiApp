@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import edu.algg.storeapiapp.data.api.Product
 import edu.algg.storeapiapp.data.api.ProductApiModel
 import edu.algg.storeapiapp.databinding.ProductItemLayoutBinding
 
-class ProductItemAdapter():ListAdapter<ProductApiModel, ProductItemAdapter.ProductViewHolder>(DIFF_CALLBACK) {
+class ProductItemAdapter():ListAdapter<Product, ProductItemAdapter.ProductViewHolder>(DIFF_CALLBACK) {
 
 
     class ProductViewHolder(private val binding: ProductItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
-        fun showProduct(product: ProductApiModel){
+        fun showProduct(product: Product){
             binding.productName.text = product.title
             binding.productPrice.text = product.price.toString()
             binding.productImage.load(product.image)
@@ -34,9 +35,9 @@ class ProductItemAdapter():ListAdapter<ProductApiModel, ProductItemAdapter.Produ
 
 }
 
-object DIFF_CALLBACK: DiffUtil.ItemCallback<ProductApiModel>(){
+object DIFF_CALLBACK: DiffUtil.ItemCallback<Product>(){
 
-    override fun areItemsTheSame(oldItem: ProductApiModel, newItem: ProductApiModel) = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: Product, newItem: Product) = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: ProductApiModel, newItem: ProductApiModel) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Product, newItem: Product) = oldItem == newItem
 }

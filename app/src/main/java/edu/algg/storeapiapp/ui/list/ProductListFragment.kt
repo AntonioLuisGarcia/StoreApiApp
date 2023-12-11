@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import edu.algg.storeapiapp.databinding.FragmentProductListBinding
+
 import edu.algg.storeapiapp.ui.adapter.ProductItemAdapter
 
 

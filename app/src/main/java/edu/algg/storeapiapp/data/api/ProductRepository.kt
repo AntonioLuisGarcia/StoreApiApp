@@ -4,22 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ProductApi{
+interface ProductResponseApi{
     @GET("products/{id}")
     suspend fun fetchProduct(@Path("id") id:Int): ProductApiModel
 
     @GET("products")
-    suspend fun fetchAllProducts(): List<ProductApiModel>
+    suspend fun fetchAllProducts(): ProductListApiModel
 }
 
-class ProductRepository private constructor(private val api:ProductApi) {
+class ProductRepository private constructor(private val api:ProductResponseApi) {
 
-    private val _products = MutableLiveData<List<ProductApiModel>>()
-    val product: LiveData<List<ProductApiModel>>
+    private val _products = MutableLiveData<List<Product>>()
+    val product: LiveData<List<Product>>
         get() = _products
 
     companion object{
@@ -30,15 +29,28 @@ class ProductRepository private constructor(private val api:ProductApi) {
                 .baseUrl("https://fakestoreapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-            val productApi = retrofit.create(ProductApi::class.java)
+            val productApi = retrofit.create(ProductResponseApi::class.java)
             _INSTANCE = _INSTANCE ?: ProductRepository(productApi)
             return _INSTANCE!!
         }
     }
 
     suspend fun fetchAll(){
-        val productsResponse = api.fetchAllProducts()
+        val productsListResponse = api.fetchAllProducts()
 
-        _products.postValue(productsResponse)
+        val productsListWithRating = mutableListOf<Product>()
+        productsListResponse.products.forEach{p ->
+            productsListWithRating.add(Product(
+                p.id,
+                p.title,
+                p.price,
+                p.description,
+                p.category,
+                p.image,
+                p.rate,
+                p.count
+            ))
+        }
+        _products.postValue(productsListWithRating)
     }
 }
