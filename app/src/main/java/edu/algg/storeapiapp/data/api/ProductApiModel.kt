@@ -12,6 +12,10 @@ data class ProductResponse(
     val rating:Rating,
 )
 
+data class Rating(
+    val rate:Double,
+    val count:Int
+)
 data class ProductListResponse(
     val productsResponse: List<ProductResponse>
 )
@@ -27,24 +31,9 @@ data class ProductApiModel(
     val count:Int
 )
 
-data class Rating(
-    val rate:Double,
-    val count:Int
-)
 
 data class ProductListApiModel(
     val products: List<ProductApiModel>
-)
-
-data class Product(
-    val id:Int,
-    val title:String,
-    val price:Double,
-    val description:String,
-    val category: String,
-    val image:String,
-    val rate:Double,
-    val count: Int
 )
 
 data class ProductDetailResponse(

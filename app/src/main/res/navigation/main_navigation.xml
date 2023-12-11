@@ -6,9 +6,18 @@
     app:startDestination="@id/product_list_id">>
 
     <fragment
-        android:id="@+id/product_list_id"
+        android:id="@+id/productListFragment"
         android:name="edu.algg.storeapiapp.ui.list.ProductListFragment"
         android:label="fragment_label"
         tools:layout="@layout/fragment_product_list"/>
 
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="edu.algg.storeapiapp.ui.detail.ProductDetail"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail" >
+        <argument
+            android:name="p"
+            app:argType="string" />
+    </fragment>
 </navigation>

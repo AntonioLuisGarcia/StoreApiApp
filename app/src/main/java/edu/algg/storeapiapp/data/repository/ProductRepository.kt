@@ -1,5 +1,6 @@
 package edu.algg.storeapiapp.data.repository
 
+import android.util.Log
 import edu.algg.storeapiapp.data.api.ProductApiRepository
 import edu.algg.storeapiapp.data.api.asEntityModel
 import edu.algg.storeapiapp.data.db.ProductDBRepository
@@ -18,10 +19,10 @@ class ProductRepository @Inject constructor(
 ) {
     val product: Flow<List<Product>>
         get() {
-
             val list = dbRepository.allProduct.map {
                 it.asProduct()
             }
+            Log.e("PRepo","1")
             return list
         }
 
@@ -30,6 +31,7 @@ class ProductRepository @Inject constructor(
 
             val apiProduct = apiRepository.getAll()
             dbRepository.insert(apiProduct.asEntityModel())
+            Log.e("PRepo","2")
         }
 
     }

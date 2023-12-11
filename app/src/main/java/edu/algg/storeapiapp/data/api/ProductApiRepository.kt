@@ -1,5 +1,6 @@
 package edu.algg.storeapiapp.data.api
 
+import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,6 +23,7 @@ class ProductApiRepository @Inject constructor(private val service:ProductServic
                 count = productResponse.rating.count
             )
         }
+        Log.e("PApiRepository","")
         return productApiModel
     }
 }

@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import edu.algg.storeapiapp.data.api.Product
-import edu.algg.storeapiapp.data.api.ProductApiModel
+import edu.algg.storeapiapp.data.repository.Product
 import edu.algg.storeapiapp.databinding.ProductItemLayoutBinding
 
 class ProductItemAdapter():ListAdapter<Product, ProductItemAdapter.ProductViewHolder>(DIFF_CALLBACK) {
 
 
-    class ProductViewHolder(private val binding: ProductItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ProductViewHolder(private val binding: ProductItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
         fun showProduct(product: Product){
             binding.productName.text = product.title
             binding.productPrice.text = product.price.toString()
@@ -24,12 +23,12 @@ class ProductItemAdapter():ListAdapter<Product, ProductItemAdapter.ProductViewHo
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ProductItemAdapter.ProductViewHolder {
+    ): ProductViewHolder {
         val binding = ProductItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ProductItemAdapter.ProductViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.showProduct(getItem(position))
     }
 

@@ -1,5 +1,6 @@
 package edu.algg.storeapiapp.data.db
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -13,5 +14,6 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
     @WorkerThread
     suspend fun insert(listPokemonEntity: List<ProductEntity>) {
         productDao.insert(listPokemonEntity)
+        Log.e("PDBRepo","")
     }
 }
