@@ -7,17 +7,17 @@ import androidx.lifecycle.viewModelScope
 import edu.algg.storeapiapp.data.repository.Product
 import edu.algg.storeapiapp.data.repository.ProductRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductDetailViewModel(): ViewModel() {
-    private val repository = ProductRepository
+class ProductDetailViewModel @Inject constructor(private val repository: ProductRepository): ViewModel() {
     private val _productUi = MutableLiveData<Product>()
-    val pokemonUi: LiveData<Product>
+    val productUi: LiveData<Product>
         get() = _productUi
 
-    public fun fetch(name: String) {
+    fun fetch(productId: Int) {
         viewModelScope.launch {
-            val productApi = repository.fetchById(name)
-            _productUi.value = Product(productApi.id,productApi.title,productApi.weight, productApi.height, productApi.front, productApi.image,  productApi.front,  productApi.front)
+            val product = repository.product(productId) // Asegúrate de tener esta función en tu repositorio
+            _productUi.value = product
         }
     }
 }

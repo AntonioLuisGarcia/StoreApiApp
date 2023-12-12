@@ -21,9 +21,9 @@ class ProductDetail : Fragment() {
     private lateinit var binding: FragmentProductDetailBinding
 
     val observer = Observer<Product>{
-        binding.topAppBar.setNavigationOnClickListener(){
+        /*binding..setNavigationOnClickListener(){
             findNavController().popBackStack(R.id.productListFragment, false)
-        }
+        }*/
         binding.productImage.load(it.image)
         binding.productName.text = it.title
         binding.productDescription.text = it.description
@@ -46,7 +46,7 @@ class ProductDetail : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetch(args.p)
+        viewModel.fetch(args.productId)
         viewModel.pokemonUi.observe(viewLifecycleOwner,observer)
     }
 }

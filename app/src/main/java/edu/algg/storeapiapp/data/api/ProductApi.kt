@@ -11,14 +11,14 @@ import javax.inject.Singleton
 interface ProductApi {
 
     @GET("products")
-    suspend fun getAll(@Query("limit") limit:Int=20, @Query("offset") offset:Int=0): ProductListResponse
+    suspend fun getAll(@Query("limit") limit:Int=20, @Query("offset") offset:Int=0): List<ProductResponse>
     @GET("products/{id}/")
     suspend fun getDetail(@Path("id") id:Int): ProductDetailResponse
 }
 @Singleton
 class ProductService @Inject constructor() {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://fakestoreapi.com//")
+        .baseUrl("https://fakestoreapi.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

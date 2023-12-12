@@ -51,6 +51,8 @@ dependencies {
 
     // Fragments
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+
+    // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
 
@@ -60,6 +62,9 @@ dependencies {
 
     //Coil
     implementation("io.coil-kt:coil:2.5.0")
+
+    // TollBar
+    implementation("androidx.activity:activity-ktx:1.8.0 ")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.0")

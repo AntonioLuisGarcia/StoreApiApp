@@ -1,6 +1,7 @@
 package edu.algg.storeapiapp.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ class ProductListFragment : Fragment() {
     private val viewModel:ProductListViewModel by viewModels()
     private lateinit var binding: FragmentProductListBinding
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,6 +37,7 @@ class ProductListFragment : Fragment() {
         val adapter = ProductItemAdapter()
         val rv = binding.productListId
         rv.adapter = adapter
+
         viewLifecycleOwner.lifecycleScope.launch{
            repeatOnLifecycle(Lifecycle.State.STARTED){
                viewModel.uiState.collect{

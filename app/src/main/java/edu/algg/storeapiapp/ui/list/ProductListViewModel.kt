@@ -18,6 +18,24 @@ class ProductListViewModel @Inject constructor(private val repository: ProductRe
     val uiState: StateFlow<ProductListUiState>
         get() = _uiState.asStateFlow()
 
+    init{
+
+        viewModelScope.launch {
+            try{
+                repository.refreshList()
+            }
+            catch (e:IOException){
+                _uiState.value = _uiState.value.copy(errorMessage = e.message!!)
+            }
+        }
+
+        viewModelScope.launch {
+            repository.product.collect{
+                _uiState.value = ProductListUiState(it)
+            }
+        }
+    }
+
     /*private val observer = Observer<List<Product>> {
         _uiState.value = it
     }*/
@@ -38,21 +56,4 @@ class ProductListViewModel @Inject constructor(private val repository: ProductRe
         repository.product.removeObserver(observer)
     }*/
 
-    init{
-
-        viewModelScope.launch {
-            try{
-                repository.refreshList()
-            }
-            catch (e:IOException){
-                _uiState.value = _uiState.value.copy(errorMessage = e.message!!)
-            }
-        }
-
-        viewModelScope.launch {
-            repository.product.collect{
-                _uiState.value = ProductListUiState(it)
-            }
-        }
-    }
 }
