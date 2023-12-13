@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">StoreApiApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="store">Tienda</string>
+    <string name="shoppingcart">Carrito</string>
+    <string name="nombre_del_producto">Nombre del Producto</string>
+    <string name="descripci_n_del_producto">Descripción del Producto</string>
+    <string name="precio_del_producto">Precio del Producto</string>
+    <string name="categor_a_del_producto">Categoría del Producto</string>
+    <string name="rate_del_producto">Rate del Producto</string>
+    <string name="count_del_rate_del_producto">Count del Rate del Producto</string>
 </resources>

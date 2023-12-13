@@ -17,22 +17,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/arrow_back" />
 
-    <!-- ID del Producto -->
-    <TextView
-        android:id="@id/product_id"
-        style="@style/TextAppearance.Material3.TitleMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ID del Producto"
-        android:layout_marginTop="16dp" />
-
     <!-- Nombre del Producto -->
     <TextView
         android:id="@+id/product_name"
         style="@style/TextAppearance.Material3.HeadlineMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre del Producto"
+        android:text="@string/nombre_del_producto"
         android:layout_marginTop="8dp" />
 
     <!-- Imagen del Producto -->
@@ -49,7 +40,7 @@
         style="@style/TextAppearance.Material3.BodyLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripción del Producto"
+        android:text="@string/descripci_n_del_producto"
         android:layout_marginTop="16dp" />
 
     <!-- Precio del Producto -->
@@ -58,7 +49,7 @@
         style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Precio del Producto"
+        android:text="@string/precio_del_producto"
         android:layout_marginTop="8dp" />
 
     <!-- Categoría del Producto -->
@@ -67,7 +58,7 @@
         style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categoría del Producto"
+        android:text="@string/categor_a_del_producto"
         android:layout_marginTop="8dp" />
 
     <!-- Categoría del Producto -->
@@ -76,7 +67,7 @@
         style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rate del Producto"
+        android:text="@string/rate_del_producto"
         android:layout_marginTop="8dp" />
 
     <!-- Categoría del Producto -->
@@ -85,6 +76,6 @@
         style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Count del Rate del Producto"
+        android:text="@string/count_del_rate_del_producto"
         android:layout_marginTop="8dp" />
 </androidx.appcompat.widget.LinearLayoutCompat>
