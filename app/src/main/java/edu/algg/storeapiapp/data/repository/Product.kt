@@ -10,5 +10,6 @@ data class Product(
     val category: String,
     val image:String,
     val rate: Double,
-    val count:Int
+    val count:Int,
+    var quantity: Int = 0 // Iniciamos a 0 porqu eno habrá nada en el carro
 )

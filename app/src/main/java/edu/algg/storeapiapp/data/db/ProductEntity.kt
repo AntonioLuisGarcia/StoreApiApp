@@ -15,7 +15,8 @@ data class ProductEntity(
     val category:String,
     val image:String,
     val rate:Double,
-    val count:Int
+    val count:Int,
+    var quantity: Int = 0 // Iniciamos a 0 porqu eno habrá nada en el carro
 )
 
 fun List<ProductEntity>.asProduct():List<Product> {
@@ -28,7 +29,9 @@ fun List<ProductEntity>.asProduct():List<Product> {
             it.category,
             it.image,
             it.rate,
-            it.count)
+            it.count,
+            it.quantity
+        )
     }
 
 }
