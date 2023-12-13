@@ -5,4 +5,5 @@
     <item name="product_category" type="id" />
     <item name="product_rate" type="id" />
     <item name="product_count" type="id" />
+    <item name="nav_view" type="id" />
 </resources>
