@@ -4,6 +4,7 @@ import android.util.Log
 import edu.algg.storeapiapp.data.api.ProductApiRepository
 import edu.algg.storeapiapp.data.api.asEntityModel
 import edu.algg.storeapiapp.data.db.ProductDBRepository
+import edu.algg.storeapiapp.data.db.ProductEntity
 import edu.algg.storeapiapp.data.db.asProduct
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -33,6 +34,9 @@ class ProductRepository @Inject constructor(
             dbRepository.insert(apiProduct.asEntityModel())
             Log.e("PRepo","2")
         }
+    }
 
+    suspend fun getProduct(id:Int):ProductEntity{
+        return dbRepository.getProductDetail(id)
     }
 }

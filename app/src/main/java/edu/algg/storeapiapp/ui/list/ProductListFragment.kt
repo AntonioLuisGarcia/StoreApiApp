@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import edu.algg.storeapiapp.databinding.FragmentProductListBinding
 
@@ -34,7 +35,10 @@ class ProductListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ProductItemAdapter()
+        val adapter = ProductItemAdapter(requireContext()){ view, product->
+            val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(product.id.toString())
+            view.findNavController().navigate(action)
+        }
         val rv = binding.productListId
         rv.adapter = adapter
 
@@ -45,6 +49,7 @@ class ProductListFragment : Fragment() {
                }
            }
         }
+
         /*binding.productListId.adapter = adapter
         viewModel.productUi.observe(viewLifecycleOwner){
             adapter.submitList(it)

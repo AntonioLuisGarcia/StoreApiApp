@@ -9,7 +9,13 @@
         android:id="@+id/productListFragment"
         android:name="edu.algg.storeapiapp.ui.list.ProductListFragment"
         android:label="fragment_label"
-        tools:layout="@layout/fragment_product_list"/>
+        tools:layout="@layout/fragment_product_list">
+
+        <action
+            android:id="@+id/action_productListFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/productDetailFragment"

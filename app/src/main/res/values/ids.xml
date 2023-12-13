@@ -3,4 +3,6 @@
     <item name="product_id" type="id" />
     <item name="product_description" type="id" />
     <item name="product_category" type="id" />
+    <item name="product_rate" type="id" />
+    <item name="product_count" type="id" />
 </resources>

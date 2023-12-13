@@ -11,25 +11,28 @@ import androidx.navigation.fragment.navArgs
 import edu.algg.storeapiapp.R
 import androidx.lifecycle.Observer
 import coil.load
+import dagger.hilt.android.AndroidEntryPoint
+import edu.algg.storeapiapp.data.db.ProductEntity
 import edu.algg.storeapiapp.data.repository.Product
 import edu.algg.storeapiapp.databinding.FragmentProductDetailBinding
 
-
+@AndroidEntryPoint
 class ProductDetail : Fragment() {
-    private val args: ProductDetailArgs by navArgs()
     private val viewModel: ProductDetailViewModel by viewModels()
+    private val args: ProductDetailArgs by navArgs()
     private lateinit var binding: FragmentProductDetailBinding
 
-    val observer = Observer<Product>{
-        /*binding..setNavigationOnClickListener(){
+    val observer = Observer<ProductEntity>{
+        binding.toolbar.setNavigationOnClickListener(){
             findNavController().popBackStack(R.id.productListFragment, false)
-        }*/
+        }
         binding.productImage.load(it.image)
         binding.productName.text = it.title
         binding.productDescription.text = it.description
         binding.productPrice.text = it.price.toString()
         binding.productCategory.text = it.category
-        //añadir rate y count
+        binding.productRate.text = it.rate.toString()
+        binding.productCount.text = it.count.toString()
     }
 
     override fun onCreateView(
@@ -46,7 +49,14 @@ class ProductDetail : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetch(args.productId)
-        viewModel.pokemonUi.observe(viewLifecycleOwner,observer)
+        binding.toolbar.setNavigationOnClickListener{
+            findNavController().popBackStack()
+        }
+        viewModel.fetch((args.productId).toInt())
+
+        viewModel.productUi.observe(viewLifecycleOwner,observer)
+
+        //viewModel.fetch(args.productId)
+        //viewModel.pokemonUi.observe(viewLifecycleOwner,observer)
     }
 }

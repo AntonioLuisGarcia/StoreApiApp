@@ -16,4 +16,8 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
         productDao.insert(listPokemonEntity)
         Log.e("PDBRepo","")
     }
+
+    suspend fun getProductDetail(id:Int):ProductEntity{
+        return productDao.getProductDetail(id);
+    }
 }
