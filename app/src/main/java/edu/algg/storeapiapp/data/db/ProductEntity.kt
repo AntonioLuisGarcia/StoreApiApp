@@ -32,5 +32,4 @@ fun List<ProductEntity>.asProduct():List<Product> {
             it.quantity
         )
     }
-
 }

@@ -4,13 +4,15 @@ import edu.algg.storeapiapp.data.db.ShopCartEntity
 import edu.algg.storeapiapp.data.repository.Product
 
 data class ShopCartModel(
+    val id: Int,
     val name: String,
     val products:List<Product>,
     val totalPrice:Double
 )
 
-fun ShopCartModel.toCharacterModel(): ShopCartModel{
+fun ShopCartModel.toShopCartModel(): ShopCartModel{
     return ShopCartModel(
+        id = this.id,
         name = this.name,
         products = this.products,
         totalPrice = this.totalPrice
@@ -18,11 +20,12 @@ fun ShopCartModel.toCharacterModel(): ShopCartModel{
 }
 
 fun List<ShopCartModel>.asEntityModel(): List<ShopCartEntity> {
-    return this.map{
+    return this.map {
         ShopCartEntity(
-            it.name,
-            it.products,
-            it.totalPrice
+            id = it.id,
+            name = it.name,
+            productsIds = it.products.map { product -> product.id }, // Convertir Product a productIds
+            totalPrice = it.totalPrice
         )
     }
 }
