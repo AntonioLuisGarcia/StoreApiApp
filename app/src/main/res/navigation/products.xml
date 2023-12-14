@@ -27,17 +27,4 @@
             app:argType="string" />
     </fragment>
 
-    <fragment
-        android:id="@+id/cartFragment"
-        android:name="edu.algg.storeapiapp.ui.cart.ShopCartFragment"
-        android:label="fragment_cart"
-        tools:layout="@layout/fragment_shop_cart">
-
-        <!-- Opcional: Define acciones si necesitas navegación desde/hacia este fragmento -->
-        <action
-            android:id="@+id/action_cartFragment_to_productDetailFragment"
-            app:destination="@id/productDetailFragment" />
-    </fragment>
-
-
 </navigation>

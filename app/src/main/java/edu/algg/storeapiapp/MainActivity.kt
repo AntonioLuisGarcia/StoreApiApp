@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import edu.algg.storeapiapp.databinding.ActivityMainBinding
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -23,12 +24,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
         navController = navHostFragment.navController
         //val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.productListFragment,
-                R.id.shopCart
-            )
-        )
         navView.setupWithNavController(navController)
     }
 }

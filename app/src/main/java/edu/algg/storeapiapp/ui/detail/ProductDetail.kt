@@ -36,6 +36,9 @@ class ProductDetail : Fragment() {
         binding.productCategory.text = it.category
         binding.productRate.text = it.rate.toString()
         binding.productCount.text = it.count.toString()
+        // Actualizar la cantidad con la cantidad del producto
+        quantity = it.quantity
+        updateQuantityDisplay()
     }
 
     override fun onCreateView(
