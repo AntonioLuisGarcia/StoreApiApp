@@ -2,7 +2,6 @@ package edu.algg.storeapiapp.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import edu.algg.storeapiapp.data.api.Rating
 import edu.algg.storeapiapp.data.repository.Product
 
 @Entity(tableName = "product")
@@ -16,7 +15,7 @@ data class ProductEntity(
     val image:String,
     val rate:Double,
     val count:Int,
-    var quantity: Int = 0 // Iniciamos a 0 porqu eno habrá nada en el carro
+    val quantity: Int = 0 // Iniciamos a 0 porqu eno habrá nada en el carro
 )
 
 fun List<ProductEntity>.asProduct():List<Product> {

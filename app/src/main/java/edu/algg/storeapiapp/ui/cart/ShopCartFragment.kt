@@ -25,7 +25,6 @@ class ShopCartFragment : Fragment() {
     private lateinit var binding: FragmentShopCartBinding
     private val viewModel: ShopCartViewModel by viewModels()
 
-
     @Inject
     lateinit var repository: ProductRepository
 

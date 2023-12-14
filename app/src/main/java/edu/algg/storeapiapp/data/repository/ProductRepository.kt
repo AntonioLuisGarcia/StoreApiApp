@@ -1,8 +1,8 @@
 package edu.algg.storeapiapp.data.repository
 
 import android.util.Log
-import edu.algg.storeapiapp.data.api.ProductApiRepository
-import edu.algg.storeapiapp.data.api.asEntityModel
+import edu.algg.storeapiapp.data.api.product.ProductApiRepository
+import edu.algg.storeapiapp.data.api.product.asEntityModel
 import edu.algg.storeapiapp.data.db.ProductDBRepository
 import edu.algg.storeapiapp.data.db.ProductEntity
 import edu.algg.storeapiapp.data.db.asProduct
@@ -23,20 +23,38 @@ class ProductRepository @Inject constructor(
             val list = dbRepository.allProduct.map {
                 it.asProduct()
             }
-            Log.e("PRepo","1")
             return list
         }
 
     suspend fun refreshList() {
         withContext(Dispatchers.IO) {
-
             val apiProduct = apiRepository.getAll()
             dbRepository.insert(apiProduct.asEntityModel())
-            Log.e("PRepo","2")
         }
     }
 
     suspend fun getProduct(id:Int):ProductEntity{
         return dbRepository.getProductDetail(id)
+    }
+
+    /**
+     * Actualiza la cantidad de un producto específico en la base de datos.
+     *
+     * @param id El ID del producto a actualizar.
+     * @param quantity La nueva cantidad que se asignará al producto.
+     */
+    suspend fun updateProductQuantity(id: Int, quantity: Int) {
+        // withContext(Dispatchers.IO) se utiliza para cambiar al hilo de I/O para operaciones de base de datos.
+        // Las operaciones de base de datos pueden ser lentas y no deben realizarse en el hilo principal.
+        withContext(Dispatchers.IO) {
+            // obtenemos la entidad del producto por ID
+            val productEntity = dbRepository.getProductDetail(id)
+
+            // se crea una copia de esa entidad con la cantidad nueva
+            val updatedProductEntity = productEntity.copy(quantity = quantity)
+
+            // se guarda la entidad actualizada en la base de datos
+            dbRepository.update(updatedProductEntity)
+        }
     }
 }

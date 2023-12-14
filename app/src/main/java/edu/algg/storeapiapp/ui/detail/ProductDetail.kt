@@ -22,6 +22,9 @@ class ProductDetail : Fragment() {
     private val args: ProductDetailArgs by navArgs()
     private lateinit var binding: FragmentProductDetailBinding
 
+    // Variable para mantener la cantidad
+    private var quantity: Int = 0
+
     val observer = Observer<ProductEntity>{
         binding.toolbar.setNavigationOnClickListener(){
             findNavController().popBackStack(R.id.productListFragment, false)
@@ -58,5 +61,32 @@ class ProductDetail : Fragment() {
 
         //viewModel.fetch(args.productId)
         //viewModel.pokemonUi.observe(viewLifecycleOwner,observer)
+        setupQuantityButtons()
+        setupAddButton()
+    }
+
+    private fun setupQuantityButtons() {
+        binding.buttonIncrease.setOnClickListener {
+            quantity++
+            updateQuantityDisplay()
+        }
+
+        binding.buttonDecrease.setOnClickListener {
+            if (quantity > 0) {
+                quantity--
+                updateQuantityDisplay()
+            }
+        }
+    }
+
+    private fun updateQuantityDisplay() {
+        binding.textQuantity.text = quantity.toString()
+    }
+
+    private fun setupAddButton() {
+        binding.buttonAdd.setOnClickListener {
+            viewModel.updateProductQuantity(args.productId.toInt(), quantity)
+            findNavController().popBackStack()
+        }
     }
 }

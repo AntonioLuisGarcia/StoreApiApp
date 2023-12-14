@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation"
+    android:id="@+id/products"
     app:startDestination="@id/productListFragment">
 
     <fragment
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/cartFragment"
-        android:name="sh"
+        android:name="edu.algg.storeapiapp.ui.cart.ShopCartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_shop_cart">
 

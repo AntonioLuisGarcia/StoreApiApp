@@ -1,4 +1,4 @@
-package edu.algg.storeapiapp.data.api
+package edu.algg.storeapiapp.data.api.product
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,5 +22,5 @@ class ProductService @Inject constructor() {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val api:ProductApi = retrofit.create(ProductApi::class.java)
+    val api: ProductApi = retrofit.create(ProductApi::class.java)
 }

@@ -20,4 +20,9 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
     suspend fun getProductDetail(id:Int):ProductEntity{
         return productDao.getProductDetail(id);
     }
+
+    @WorkerThread
+    suspend fun update(productEntity: ProductEntity) {
+        productDao.update(productEntity)
+    }
 }

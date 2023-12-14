@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.productListFragment,
-                R.id.productListFragment
+                R.id.shopCart
             )
         )
         navView.setupWithNavController(navController)

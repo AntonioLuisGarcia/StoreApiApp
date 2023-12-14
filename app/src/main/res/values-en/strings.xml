@@ -11,4 +11,5 @@
     <string name="count_del_rate_del_producto">Count of Rate</string>
     <string name="hello_blank_fragment">Hi!</string>
     <string name="default_cart_name">My Cart</string>
+    <string name="add">Add</string>
 </resources>

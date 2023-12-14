@@ -1,4 +1,4 @@
-package edu.algg.storeapiapp.data.api
+package edu.algg.storeapiapp.data.api.product
 
 import edu.algg.storeapiapp.data.db.ProductEntity
 
@@ -9,7 +9,7 @@ data class ProductResponse(
     val description:String,
     val category: String,
     val image:String,
-    val rating:Rating,
+    val rating: Rating,
 )
 
 data class Rating(
@@ -46,7 +46,7 @@ data class ProductDetailResponse(
     val rate:Double,
     val count:Int
 ){
-    fun asApiModel():ProductApiModel {
+    fun asApiModel(): ProductApiModel {
         return ProductApiModel(
             id,
             title,
