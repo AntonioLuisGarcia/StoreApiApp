@@ -24,7 +24,6 @@ fun List<ShopCartModel>.asEntityModel(): List<ShopCartEntity> {
         ShopCartEntity(
             id = it.id,
             name = it.name,
-            productsIds = it.products.map { product -> product.id }, // Convertir Product a productIds
             totalPrice = it.totalPrice
         )
     }

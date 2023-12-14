@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
@@ -30,13 +31,6 @@ interface ProductDao {
     @Query("UPDATE product SET quantity = :quantity WHERE id = :productId")
     suspend fun updateProductQuantityInCart(productId: Int, quantity: Int)
 
-    // Método para obtener el carrito (suponiendo un único carrito llamado "default_cart")
-    @Query("SELECT * FROM shopCart WHERE name = 'default_cart'")
-    suspend fun getCart(): ShopCartEntity
-
-    // Método para obtener productos por IDs
-    @Query("SELECT * FROM product WHERE id IN (:productIds)")
-    suspend fun getProductsByIds(productIds: List<Int>): List<ProductEntity>
 
     // Método para obtener el carrito por ID
     @Query("SELECT * FROM shopCart WHERE id = :cartId")
@@ -45,5 +39,21 @@ interface ProductDao {
     // Método para actualizar el carrito
     @Update
     suspend fun updateCart(cart: ShopCartEntity)
+
+    // Método para obtener todos los productos en un carrito específico
+    @Query("SELECT * FROM product WHERE cartId = :cartId")
+    fun getProductsForCart(cartId: Int): Flow<List<ProductEntity>>
+
+    // Método para asignar un producto a un carrito
+    @Query("UPDATE product SET cartId = :cartId WHERE id = :productId")
+    suspend fun assignProductToCart(productId: Int, cartId: Int)
+
+    // Método para remover un producto de cualquier carrito
+    @Query("UPDATE product SET cartId = NULL WHERE id = :productId")
+    suspend fun removeProductFromCart(productId: Int)
+
+    @Transaction
+    @Query("SELECT * FROM shopCart WHERE id = :cartId")
+    fun getCartWithProducts(cartId: Int): Flow<ShopCartWithProducts>
 
 }

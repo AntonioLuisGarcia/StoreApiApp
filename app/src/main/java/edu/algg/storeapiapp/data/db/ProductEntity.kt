@@ -15,7 +15,8 @@ data class ProductEntity(
     val image:String,
     val rate:Double,
     val count:Int,
-    val quantity: Int = 0 // Iniciamos a 0 porqu eno habrá nada en el carro
+    val quantity: Int = 0, // Iniciamos a 0 porqu eno habrá nada en el carro
+    val cartId: Int? = null // Añadido para relacionar con ShopCartEntity, puede ser nulo si el producto no está en un carrito
 )
 
 fun List<ProductEntity>.asProduct():List<Product> {
