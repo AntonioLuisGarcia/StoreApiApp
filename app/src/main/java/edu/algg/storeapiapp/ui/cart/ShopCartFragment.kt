@@ -25,9 +25,6 @@ class ShopCartFragment : Fragment() {
     private lateinit var binding: FragmentShopCartBinding
     private val viewModel: ShopCartViewModel by viewModels()
 
-    @Inject
-    lateinit var repository: ProductRepository
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,12 +36,15 @@ class ShopCartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        observeViewModel()
         val adapter = ShopCartAdapter(requireContext(),
             onIncrease = { product -> viewModel.increaseProductQuantity(product.id) },
             onDecrease = { product -> viewModel.decreaseProductQuantity(product.id) }
         )
         binding.rvCartItems.adapter = adapter
         viewModel.updateCartProducts()
+        viewModel.updateTotalPrice()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
@@ -53,42 +53,29 @@ class ShopCartFragment : Fragment() {
             }
         }
 
+
         binding.btnCheckout.setOnClickListener {
             // Implementar lógica de checkout
         }
 
     }
 
-    private fun showCreateListDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Crear Lista") //builder.setTitle(getString(R.string.create_list))
-
-        // Creo un EditText para que el usuario ingrese el nombre de la lista
-        val input = EditText(requireContext())
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        builder.setView(input)
-
-        /*
-        * // Creo un EditText para que el usuario ingrese el nuevo nombre del carrito
-    val input = EditText(requireContext()).apply {
-        inputType = InputType.TYPE_CLASS_TEXT
-        hint = getString(R.string.cart_name)
+    private fun setupRecyclerView() {
+        val adapter = ShopCartAdapter(requireContext(),
+            onIncrease = { product -> viewModel.increaseProductQuantity(product.id) },
+            onDecrease = { product -> viewModel.decreaseProductQuantity(product.id) }
+        )
+        binding.rvCartItems.adapter = adapter
     }
-    builder.setView(input)
-        * */
 
-        // Botón positivo para confirmar y cambiar el nombre del carrito
-        builder.setPositiveButton("Cambiar") { _, _ ->
-            val newName = input.text.toString()
-            if (newName.isNotBlank()) {
-                viewModel.changeCartName(newName)
-                Toast.makeText(requireContext(), "Nombre del carrito actualizado a: $newName", Toast.LENGTH_SHORT).show()
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    (binding.rvCartItems.adapter as ShopCartAdapter).submitList(uiState.products)
+                    binding.tvTotal.text = "Total: \$${uiState.totalPrice}"
+                }
             }
         }
-
-        // Botón negativo para cancelar el diálogo
-        builder.setNegativeButton("Cancelar") { dialog, _ -> dialog.cancel() }
-
-        builder.show()
     }
 }

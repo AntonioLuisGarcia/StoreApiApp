@@ -35,9 +35,9 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
                 _uiState.value = _uiState.value.copy(errorMessage = e.message!!)
             }
 
-            // Tus otros métodos...
         }
     }
+
 
     private suspend fun createCartIfNotExists() {
         val existingCart = productDao.getCartById(CART_ID) // CART_ID es el ID del carrito
@@ -49,6 +49,14 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
 
     companion object {
         const val CART_ID = 1 // ID constante para el único carrito
+    }
+
+    fun updateTotalPrice() {
+        viewModelScope.launch {
+            val totalPrice = productDao.getTotalPriceInCart()
+            _uiState.value = _uiState.value.copy(totalPrice = totalPrice)
+            Log.d("ShopCartFragment", "Carrito actualizado con ${totalPrice} dolares.")
+        }
     }
 
     fun updateCartProducts() {

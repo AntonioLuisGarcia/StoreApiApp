@@ -63,4 +63,8 @@ interface ProductDao {
     // Método para obtener todos los productos con cantidad mayor a 0
     @Query("SELECT * FROM product WHERE quantity > 0")
     fun getProductsInCart(): Flow<List<ProductEntity>>
+
+    // Método para obtener el total del precio de los productos en el carrito
+    @Query("SELECT SUM(price * quantity) FROM product WHERE quantity > 0")
+    suspend fun getTotalPriceInCart(): Double
 }
