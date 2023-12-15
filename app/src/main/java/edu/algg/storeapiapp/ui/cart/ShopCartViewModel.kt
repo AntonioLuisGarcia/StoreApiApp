@@ -7,10 +7,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.algg.storeapiapp.data.db.ProductDao
 import edu.algg.storeapiapp.data.db.ShopCartEntity
 import edu.algg.storeapiapp.data.repository.ProductRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
@@ -78,12 +80,34 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
 
     // Método para disminuir la cantidad de un producto en el carrito
     fun decreaseProductQuantity(productId: Int) {
-        val updatedProducts = _uiState.value.products.map { product ->
-            if (product.id == productId && product.quantity > 1) product.copy(quantity = product.quantity - 1) else product
+        viewModelScope.launch {
+            // Obtén una lista mutable para poder modificarla
+            val updatedProducts = _uiState.value.products.toMutableList()
+            val productIndex = updatedProducts.indexOfFirst { it.id == productId }
+            if (productIndex != -1) {
+                val product = updatedProducts[productIndex]
+                if (product.quantity > 1) {
+                    // Si la cantidad es mayor que 1, disminuye la cantidad
+                    updatedProducts[productIndex] = product.copy(quantity = product.quantity - 1)
+                } else {
+                    // Si la cantidad llega a 0, elimina el producto de la lista
+                    updatedProducts.removeAt(productIndex)
+                    // Además, actualiza la base de datos para eliminar el producto del carrito
+                    deleteProductFromCart(productId)
+                }
+                // Actualiza el estado del UI con la lista modificada y recalcula el total
+                _uiState.value = _uiState.value.copy(products = updatedProducts)
+                calculateTotal()
+            }
         }
-        _uiState.value = _uiState.value.copy(products = updatedProducts)
-        calculateTotal()
     }
+
+    suspend fun deleteProductFromCart(productId: Int) {
+        withContext(Dispatchers.IO) {
+            productDao.deleteProductFromCart(productId)
+        }
+    }
+
 
     fun changeCartName(newName: String) {
         _uiState.value = _uiState.value.copy(name = newName)

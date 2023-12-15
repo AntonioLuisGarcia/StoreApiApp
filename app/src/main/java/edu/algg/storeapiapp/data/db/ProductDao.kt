@@ -67,4 +67,8 @@ interface ProductDao {
     // Método para obtener el total del precio de los productos en el carrito
     @Query("SELECT SUM(price * quantity) FROM product WHERE quantity > 0")
     suspend fun getTotalPriceInCart(): Double? // añado el nulable porque me estaba dando fallo en el viewmodel
+
+    @Query("UPDATE product SET quantity = 0 WHERE id = :productId")
+    suspend fun deleteProductFromCart(productId: Int)
+
 }
