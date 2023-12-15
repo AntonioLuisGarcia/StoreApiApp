@@ -14,13 +14,15 @@ class ShopCartAdapter (private val context: Context, private val onIncrease: (Pr
                                                 ///mirar tipo/////////
     inner class ShopCartViewHolder(private val binding: ProductCartItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
-            binding.tvProductName.text = product.title
-            binding.tvQuantity.text = product.price.toString()
-            binding.imgProduct.load(product.image)
-            binding.tvQuantity.text = product.quantity.toString()
-            binding.tvProductPrice.text = product.price.toString()
-            binding.btnIncrease.setOnClickListener { onIncrease(product) }
-            binding.btnDecrease.setOnClickListener { onDecrease(product) }
+            if (product != null) {
+                binding.tvProductName.text = product.title
+                binding.tvQuantity.text = product.price.toString()
+                binding.imgProduct.load(product.image)
+                binding.tvQuantity.text = product.quantity.toString()
+                binding.tvProductPrice.text = product.price.toString()
+                binding.btnIncrease.setOnClickListener { onIncrease(product) }
+                binding.btnDecrease.setOnClickListener { onDecrease(product) }
+            }
         }
     }
 

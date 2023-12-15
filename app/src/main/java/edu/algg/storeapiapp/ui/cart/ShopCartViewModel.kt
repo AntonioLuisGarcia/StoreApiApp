@@ -51,7 +51,8 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
 
     fun updateTotalPrice() {
         viewModelScope.launch {
-            val totalPrice = productDao.getTotalPriceInCart()
+            // Si 'getTotalPriceInCart()' es 'null', se utilizará '0.0' como valor por defecto.
+            val totalPrice = productDao?.getTotalPriceInCart() ?: 0.0
             _uiState.value = _uiState.value.copy(totalPrice = totalPrice)
             Log.d("ShopCartFragment", "Carrito actualizado con ${totalPrice} dolares.")
         }
