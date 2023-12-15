@@ -2,13 +2,11 @@ package edu.algg.storeapiapp.ui.cart
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.algg.storeapiapp.data.repository.Product
-import edu.algg.storeapiapp.data.repository.ShopCart
 import edu.algg.storeapiapp.databinding.ProductCartItemBinding
 
 class ShopCartAdapter (private val context: Context, private val onIncrease: (Product) -> Unit, private val onDecrease: (Product) -> Unit) : ListAdapter<Product, ShopCartAdapter.ShopCartViewHolder>(ProductDiffCallback){
