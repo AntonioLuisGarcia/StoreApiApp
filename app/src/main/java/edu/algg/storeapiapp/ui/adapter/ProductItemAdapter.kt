@@ -1,11 +1,9 @@
 package edu.algg.storeapiapp.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +11,6 @@ import coil.load
 import edu.algg.storeapiapp.data.repository.Product
 import edu.algg.storeapiapp.databinding.ProductItemLayoutBinding
 
-//private val onProductClick: (String) -> Unit
 class ProductItemAdapter(private val context: Context, private val onClick:((View, Product) ->Unit)):ListAdapter<Product, ProductItemAdapter.ProductViewHolder>(DIFF_CALLBACK) {
 
 

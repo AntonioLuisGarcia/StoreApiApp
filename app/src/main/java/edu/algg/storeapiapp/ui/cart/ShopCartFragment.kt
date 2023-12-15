@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,6 +54,11 @@ class ShopCartFragment : Fragment() {
             }
         }
 
+        binding.btnEditCartName.setOnClickListener {
+            val currentCartName = binding.tvCartName.text.toString()
+            val action = ShopCartFragmentDirections.actionShopCartFragmentToEditCartNameFragment(currentCartName)
+            findNavController().navigate(action)
+        }
 
         binding.btnCheckout.setOnClickListener {
             // Implementar lógica de checkout
@@ -65,6 +71,10 @@ class ShopCartFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     (binding.rvCartItems.adapter as ShopCartAdapter).submitList(uiState.products)
+
+                    // Actualiza el nombre del carrito
+                    binding.tvCartName.text = uiState.name
+
                     uiState.products.forEach { product ->
                         Log.d("Fragment", "Producto: ${product.title}, Cantidad: ${product.quantity}")
                     }

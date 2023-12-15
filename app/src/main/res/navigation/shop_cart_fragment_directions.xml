@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/shopCartFragment">
+
+    <fragment
+        android:id="@+id/shopCartFragment"
+        android:name="edu.algg.storeapiapp.ui.cart.ShopCartFragment"
+        android:label="fragment_shop_cart"
+        tools:layout="@layout/fragment_shop_cart" >
+        <action
+            android:id="@+id/action_shopCartFragment_to_editCartNameFragment"
+            app:destination="@id/editCartNameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCartNameFragment"
+        android:name="edu.algg.storeapiapp.ui.cartName.EditCartNameFragment"
+        android:label="fragment_edit_cart_name"
+        tools:layout="@layout/fragment_edit_cart_name">
+        <argument
+            android:name="cartName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

@@ -35,25 +35,4 @@ class ProductListViewModel @Inject constructor(private val repository: ProductRe
             }
         }
     }
-
-    /*private val observer = Observer<List<Product>> {
-        _uiState.value = it
-    }*/
-
-    /*init{
-        fetch()
-    }
-
-    fun fetch(){
-        repository.product.observeForever(observer)
-        viewModelScope.launch {
-            repository.fetchAll()
-        }
-    }
-
-    override fun onCleared(){
-        super.onCleared()
-        repository.product.removeObserver(observer)
-    }*/
-
 }
