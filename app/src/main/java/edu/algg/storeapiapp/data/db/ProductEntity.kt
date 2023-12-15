@@ -34,3 +34,17 @@ fun List<ProductEntity>.asProduct():List<Product> {
         )
     }
 }
+
+fun ProductEntity.asProduct():Product {
+    return Product(
+            id = this.id,
+            title = this.title,
+            price = this.price,
+            description = this.description,
+            category = this.category,
+            image = this.image,
+            rate = this.rate,
+            count = this.count,
+            quantity = this.quantity
+        )
+}

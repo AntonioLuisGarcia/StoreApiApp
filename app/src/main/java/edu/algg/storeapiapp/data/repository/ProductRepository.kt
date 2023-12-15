@@ -57,4 +57,8 @@ class ProductRepository @Inject constructor(
             dbRepository.update(updatedProductEntity)
         }
     }
+
+    val productsInCart: Flow<List<Product>>
+        get() = dbRepository.getProductsInCart()
+
 }

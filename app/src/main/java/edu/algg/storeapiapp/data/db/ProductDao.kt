@@ -56,4 +56,11 @@ interface ProductDao {
     @Query("SELECT * FROM shopCart WHERE id = :cartId")
     fun getCartWithProducts(cartId: Int): Flow<ShopCartWithProducts>
 
+    // Método para insertar un nuevo carrito
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCart(cart: ShopCartEntity)
+
+    // Método para obtener todos los productos con cantidad mayor a 0
+    @Query("SELECT * FROM product WHERE quantity > 0")
+    fun getProductsInCart(): Flow<List<ProductEntity>>
 }

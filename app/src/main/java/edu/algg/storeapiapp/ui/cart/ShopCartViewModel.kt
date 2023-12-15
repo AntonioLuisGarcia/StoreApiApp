@@ -1,9 +1,12 @@
 package edu.algg.storeapiapp.ui.cart
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import edu.algg.storeapiapp.data.db.ProductDao
+import edu.algg.storeapiapp.data.db.ShopCartEntity
 import edu.algg.storeapiapp.data.repository.Product
 import edu.algg.storeapiapp.data.repository.ProductRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +18,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ShopCartViewModel @Inject constructor(private val repository: ProductRepository): ViewModel() {
+class ShopCartViewModel @Inject constructor(private val repository: ProductRepository, private val productDao: ProductDao): ViewModel() {
 
     private val _uiState = MutableStateFlow(ShopCartUIState(name = "Mi Carrito", products = listOf(), totalPrice = 0.0))
     val uiState: StateFlow<ShopCartUIState>
@@ -25,15 +28,35 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
     init {
         viewModelScope.launch {
             try {
+                // Crear un carrito si no existe
+                createCartIfNotExists()
                 repository.refreshList()
             } catch (e: IOException) {
                 _uiState.value = _uiState.value.copy(errorMessage = e.message!!)
             }
+
+            // Tus otros métodos...
         }
+    }
+
+    private suspend fun createCartIfNotExists() {
+        val existingCart = productDao.getCartById(CART_ID) // CART_ID es el ID del carrito
+        if (existingCart == null) {
+            val newCart = ShopCartEntity(id = CART_ID, name = "Mi Carrito", totalPrice = 0.0)
+            productDao.insertCart(newCart)
+        }
+    }
+
+    companion object {
+        const val CART_ID = 1 // ID constante para el único carrito
+    }
+
+    fun updateCartProducts() {
         viewModelScope.launch {
-            repository.product.collect { products ->
+            repository.productsInCart.collect { products ->
                 _uiState.value = _uiState.value.copy(products = products)
                 calculateTotal()
+                Log.d("ShopCartFragment", "Carrito actualizado con ${products.size} productos.")
             }
         }
     }

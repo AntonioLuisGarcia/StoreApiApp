@@ -2,7 +2,9 @@ package edu.algg.storeapiapp.data.db
 
 import android.util.Log
 import androidx.annotation.WorkerThread
+import edu.algg.storeapiapp.data.repository.Product
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,5 +52,13 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
 
     fun getCartWithProducts(cartId: Int): Flow<ShopCartWithProducts> {
         return productDao.getCartWithProducts(cartId)
+    }
+
+    fun getProductsInCart(): Flow<List<Product>> {
+        return productDao.getProductsInCart().map { entities ->
+            entities.map { entity ->
+                entity.asProduct() // Asegúrate de que esta función devuelva un objeto Product
+            }
+        }
     }
 }

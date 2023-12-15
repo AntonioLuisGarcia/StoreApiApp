@@ -44,7 +44,7 @@ class ShopCartFragment : Fragment() {
             onDecrease = { product -> viewModel.decreaseProductQuantity(product.id) }
         )
         binding.rvCartItems.adapter = adapter
-
+        viewModel.updateCartProducts()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
@@ -56,6 +56,7 @@ class ShopCartFragment : Fragment() {
         binding.btnCheckout.setOnClickListener {
             // Implementar lógica de checkout
         }
+
     }
 
     private fun showCreateListDialog() {
