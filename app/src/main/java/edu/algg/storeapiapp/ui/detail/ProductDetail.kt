@@ -58,9 +58,12 @@ class ProductDetail : Fragment() {
         binding.toolbar.setNavigationOnClickListener{
             findNavController().popBackStack()
         }
+
         viewModel.fetch((args.productId).toInt())
 
         viewModel.productUi.observe(viewLifecycleOwner,observer)
+
+        // Establece la cantidad inicial cuando se cargan los detalles del producto
 
         //viewModel.fetch(args.productId)
         //viewModel.pokemonUi.observe(viewLifecycleOwner,observer)
@@ -89,7 +92,95 @@ class ProductDetail : Fragment() {
     private fun setupAddButton() {
         binding.buttonAdd.setOnClickListener {
             viewModel.updateProductQuantity(args.productId.toInt(), quantity)
+
+            viewModel.productUi.observe(viewLifecycleOwner) { productEntity ->
+                // Establece la cantidad inicial cuando se cargan los detalles del producto
+                quantity = productEntity.quantity
+                updateQuantityDisplay()
+            }
+
             findNavController().popBackStack()
         }
     }
 }
+
+/*
+*
+* class ProductDetail : Fragment() {
+    private val viewModel: ProductDetailViewModel by viewModels()
+    private val args: ProductDetailArgs by navArgs()
+    private lateinit var binding: FragmentProductDetailBinding
+
+    // Variable para mantener la cantidad
+    private var quantity: Int = 0
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentProductDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        viewModel.fetch(args.productId.toInt())
+
+        viewModel.productUi.observe(viewLifecycleOwner) { productEntity ->
+            // Actualiza la UI con los detalles del producto
+            updateProductDetails(productEntity)
+
+            // Configura los botones una vez que se tienen los detalles del producto
+            setupQuantityButtons()
+            setupAddButton()
+        }
+    }
+
+    private fun updateProductDetails(productEntity: ProductEntity) {
+        binding.productImage.load(productEntity.image)
+        binding.productName.text = productEntity.title
+        binding.productDescription.text = productEntity.description
+        binding.productPrice.text = productEntity.price.toString()
+        binding.productCategory.text = productEntity.category
+        binding.productRate.text = productEntity.rate.toString()
+        binding.productCount.text = productEntity.count.toString()
+
+        // Establece la cantidad inicial basada en el producto
+        quantity = productEntity.quantity
+        updateQuantityDisplay()
+    }
+
+    private fun setupQuantityButtons() {
+        binding.buttonIncrease.setOnClickListener {
+            quantity++
+            updateQuantityDisplay()
+        }
+
+        binding.buttonDecrease.setOnClickListener {
+            if (quantity > 0) {
+                quantity--
+                updateQuantityDisplay()
+            }
+        }
+    }
+
+    private fun updateQuantityDisplay() {
+        binding.textQuantity.text = quantity.toString()
+    }
+
+    private fun setupAddButton() {
+        binding.buttonAdd.setOnClickListener {
+            // Actualiza la cantidad en el ViewModel
+            viewModel.updateProductQuantity(args.productId.toInt(), quantity)
+
+            // Navega hacia atrás después de actualizar
+            findNavController().popBackStack()
+        }
+    }
+}
+
+* */
