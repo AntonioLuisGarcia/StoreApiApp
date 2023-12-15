@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import edu.algg.storeapiapp.data.repository.Product
 import edu.algg.storeapiapp.databinding.ProductCartItemBinding
 
@@ -15,6 +16,9 @@ class ShopCartAdapter (private val context: Context, private val onIncrease: (Pr
         fun bind(product: Product) {
             binding.tvProductName.text = product.title
             binding.tvQuantity.text = product.price.toString()
+            binding.imgProduct.load(product.image)
+            binding.tvQuantity.text = product.quantity.toString()
+            binding.tvProductPrice.text = product.price.toString()
             binding.btnIncrease.setOnClickListener { onIncrease(product) }
             binding.btnDecrease.setOnClickListener { onDecrease(product) }
         }
