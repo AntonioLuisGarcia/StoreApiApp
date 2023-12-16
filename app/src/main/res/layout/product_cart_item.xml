@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="8dp">
 
@@ -43,9 +44,11 @@
 
         <Button
             android:id="@+id/btnDecrease"
-            android:layout_width="60dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="-" />
+            app:iconSize="26dp"
+            android:padding="7dp"
+            app:icon="@drawable/remove" />
 
         <TextView
             android:id="@+id/tvQuantity"
@@ -57,9 +60,12 @@
 
         <Button
             android:id="@+id/btnIncrease"
-            android:layout_width="60dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="+" />
+            app:iconSize="26dp"
+            android:gravity="center"
+            android:padding="7dp"
+            app:icon="@drawable/add" />
     </LinearLayout>
 
 </LinearLayout>

@@ -93,9 +93,12 @@
             <!-- Botón Menos -->
             <Button
                 android:id="@+id/button_decrease"
-                android:layout_width="wrap_content"
+                android:layout_width="42dp"
                 android:layout_height="wrap_content"
-                android:text="-" />
+                android:padding="5dp"
+                app:icon="@drawable/remove"
+                android:layout_marginEnd="20dp"
+                app:iconSize="32dp" />
 
             <!-- Cantidad -->
             <TextView
@@ -104,14 +107,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="1" />
+                android:text="0" />
 
             <!-- Botón Más -->
             <Button
                 android:id="@+id/button_increase"
-                android:layout_width="wrap_content"
+                android:layout_width="42dp"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:padding="5dp"
+                android:layout_marginStart="20dp"
+                app:icon="@drawable/add"
+                app:iconSize="32dp" />
         </LinearLayout>
 
 
