@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoreApiApp</string>
+    <string name="store">Geschäft</string>
+    <string name="shoppingcart">Einkaufswagen</string>
+    <string name="nombre_del_producto">Name des Produkts</string>
+    <string name="descripci_n_del_producto">Beschreibung des Produkts</string>
+    <string name="precio_del_producto">Preis des Produkts</string>
+    <string name="categor_a_del_producto">Kategorie des Produkts</string>
+    <string name="rate_del_producto">Bewertung des Produkts</string>
+    <string name="count_del_rate_del_producto">Anzahl der Bewertungen</string>
+    <string name="hello_blank_fragment">Hallo!</string>
+    <string name="default_cart_name">Mein Wagen</string>
+    <string name="add">Hinzufügen</string>
+    <string name="nombre_del_carrito">Wagenname</string>
+    <string name="editar">Bearbeiten</string>
+</resources>
