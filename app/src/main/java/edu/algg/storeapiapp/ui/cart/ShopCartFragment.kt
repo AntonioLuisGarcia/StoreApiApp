@@ -71,7 +71,17 @@ class ShopCartFragment : Fragment() {
         }
 
         binding.btnCheckout.setOnClickListener {
-            val shareableText = getShareableText(viewModel.uiState.value.products)
+            val cartName = viewModel.uiState.value.name
+            val cartTotal = viewModel.uiState.value.totalPrice
+
+            // Formatear el título y subtítulo con la información del carrito
+            val title = "Nombre del Carrito: $cartName"
+            val subtitle = "Total del Carrito: $${String.format("%.2f", cartTotal)}"
+            val productsText = getShareableText(viewModel.uiState.value.products)
+
+            // Combinar título, subtítulo y el texto de los productos
+            val shareableText = "$title\n$subtitle\n\n$productsText"
+
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, shareableText)
