@@ -15,4 +15,5 @@
     <string name="nombre_del_carrito">Wagenname</string>
     <string name="editar">Bearbeiten</string>
     <string name="products">Produkts</string>
+    <string name="share_cart">Warenkorb teilen</string>
 </resources>

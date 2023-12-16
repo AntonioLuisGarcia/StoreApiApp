@@ -75,7 +75,7 @@
             android:id="@+id/btnCheckout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Realizar Pedido" />
+            android:text="@string/share_cart" />
 
     </LinearLayout>
 
