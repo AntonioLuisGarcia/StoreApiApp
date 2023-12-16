@@ -16,4 +16,9 @@
     <string name="editar">Bearbeiten</string>
     <string name="products">Produkts</string>
     <string name="share_cart">Warenkorb teilen</string>
+    <string name="categoria_con_placeholder">Kategori: %1$s</string>
+    <string name="price_con_placeholder">$ %1$s</string>
+    <string name="count_con_placeholder">Bewertungen: %1$s</string>
+    <string name="total_price_con_placeholder">Summe: $ %1$s</string>
+
 </resources>

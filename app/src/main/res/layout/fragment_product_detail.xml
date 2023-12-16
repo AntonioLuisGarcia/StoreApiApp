@@ -61,26 +61,41 @@
             style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/categor_a_del_producto"
-            android:layout_marginTop="8dp" />
+            android:text="@string/categoria_con_placeholder"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            />
 
-        <!-- Categoría del Producto -->
-        <TextView
-            android:id="@id/product_rate"
-            style="@style/TextAppearance.Material3.BodyMedium"
+
+        <!-- Contenedor para RatingBar y la cuenta de votos -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rate_del_producto"
-            android:layout_marginTop="8dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
-        <!-- Categoría del Producto -->
-        <TextView
-            android:id="@id/product_count"
-            style="@style/TextAppearance.Material3.BodyMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/count_del_rate_del_producto"
-            android:layout_marginTop="8dp" />
+            <!-- RatingBar -->
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:rating="4.3"
+                android:isIndicator="true" />
+
+            <!-- Cantidad de Votos -->
+            <TextView
+                android:id="@+id/product_count"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_marginRight="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/count_del_rate_del_producto"
+                android:layout_marginStart="4dp" />
+        </LinearLayout>
 
         <!-- Contenedor para botones de cantidad y añadir -->
         <LinearLayout

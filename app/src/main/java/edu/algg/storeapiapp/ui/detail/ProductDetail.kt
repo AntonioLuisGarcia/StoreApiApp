@@ -32,10 +32,10 @@ class ProductDetail : Fragment() {
         binding.productImage.load(it.image)
         binding.productName.text = it.title
         binding.productDescription.text = it.description
-        binding.productPrice.text = it.price.toString()
-        binding.productCategory.text = it.category
-        binding.productRate.text = it.rate.toString()
-        binding.productCount.text = it.count.toString()
+        binding.productPrice.text = getString(R.string.price_con_placeholder,it.price.toString())
+        binding.productCategory.text = getString(R.string.categoria_con_placeholder,it.category)
+        binding.ratingBar.rating = it.rate.toFloat()
+        binding.productCount.text = getString(R.string.count_con_placeholder,it.count.toString())
         // Actualizar la cantidad con la cantidad del producto
         quantity = it.quantity
         updateQuantityDisplay()
