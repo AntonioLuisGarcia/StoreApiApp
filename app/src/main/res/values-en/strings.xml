@@ -12,4 +12,6 @@
     <string name="hello_blank_fragment">Hi!</string>
     <string name="default_cart_name">My Cart</string>
     <string name="add">Add</string>
+    <string name="nombre_del_carrito">Cart Name</string>
+    <string name="editar">Edit</string>
 </resources>

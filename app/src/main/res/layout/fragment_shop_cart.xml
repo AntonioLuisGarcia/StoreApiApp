@@ -30,7 +30,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Nombre del Carrito"
+                    android:text="@string/nombre_del_carrito"
                     android:textSize="18sp"
                     android:gravity="start|center_vertical" />
 

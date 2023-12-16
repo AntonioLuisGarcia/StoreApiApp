@@ -71,4 +71,13 @@ interface ProductDao {
     @Query("UPDATE product SET quantity = 0 WHERE id = :productId")
     suspend fun deleteProductFromCart(productId: Int)
 
+    @Query("UPDATE shopCart SET name = :newName WHERE id = :cartId")
+    suspend fun updateCartName(cartId: Int, newName: String)
+
+    @Query("UPDATE shopCart SET totalPrice = :totalPrice WHERE id = :cartId")
+    suspend fun updateCartTotalPrice(cartId: Int, totalPrice: Double)
+
+    @Query("SELECT name FROM shopCart WHERE id = :cartId")
+    suspend fun getCartNameById(cartId: Int): String
+
 }

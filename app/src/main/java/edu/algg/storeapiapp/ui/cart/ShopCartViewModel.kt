@@ -71,32 +71,39 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
     }
 
     fun increaseProductQuantity(productId: Int) {
-        val updatedProducts = _uiState.value.products.map { product ->
-            if (product.id == productId) product.copy(quantity = product.quantity + 1) else product
+        viewModelScope.launch {
+            val updatedProducts = _uiState.value.products.map { product ->
+                if (product.id == productId) product.copy(quantity = product.quantity + 1) else product
+            }
+            _uiState.value = _uiState.value.copy(products = updatedProducts)
+
+            // Actualizar la cantidad en la base de datos
+            val newQuantity = updatedProducts.find { it.id == productId }?.quantity ?: 0
+            productDao.updateProductQuantityInCart(productId, newQuantity)
+
+            calculateTotal()
         }
-        _uiState.value = _uiState.value.copy(products = updatedProducts)
-        calculateTotal()
     }
 
     // Método para disminuir la cantidad de un producto en el carrito
     fun decreaseProductQuantity(productId: Int) {
         viewModelScope.launch {
-            // Obtén una lista mutable para poder modificarla
             val updatedProducts = _uiState.value.products.toMutableList()
             val productIndex = updatedProducts.indexOfFirst { it.id == productId }
             if (productIndex != -1) {
                 val product = updatedProducts[productIndex]
                 if (product.quantity > 1) {
-                    // Si la cantidad es mayor que 1, disminuye la cantidad
                     updatedProducts[productIndex] = product.copy(quantity = product.quantity - 1)
                 } else {
-                    // Si la cantidad llega a 0, elimina el producto de la lista
                     updatedProducts.removeAt(productIndex)
-                    // Además, actualiza la base de datos para eliminar el producto del carrito
                     deleteProductFromCart(productId)
                 }
-                // Actualiza el estado del UI con la lista modificada y recalcula el total
                 _uiState.value = _uiState.value.copy(products = updatedProducts)
+
+                // Actualizar la cantidad en la base de datos
+                val newQuantity = updatedProducts.find { it.id == productId }?.quantity ?: 0
+                productDao.updateProductQuantityInCart(productId, newQuantity)
+
                 calculateTotal()
             }
         }
@@ -108,14 +115,30 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
         }
     }
 
+    fun fetchCartName() {
+        viewModelScope.launch {
+            val cartName = productDao.getCartNameById(CART_ID)
+            _uiState.value = _uiState.value.copy(name = cartName)
+        }
+    }
 
     fun changeCartName(newName: String) {
-        _uiState.value = _uiState.value.copy(name = newName)
+        viewModelScope.launch {
+            // Actualiza el nombre del carrito en la base de datos
+            productDao.updateCartName(CART_ID, newName)
+
+            // Actualiza el estado del UI
+            _uiState.value = _uiState.value.copy(name = newName)
+        }
     }
 
     // Función para calcular el total del carrito
     private fun calculateTotal() {
         val total = _uiState.value.products.sumOf { it.price * it.quantity }
         _uiState.value = _uiState.value.copy(totalPrice = total)
+
+        viewModelScope.launch(Dispatchers.IO) {
+            productDao.updateCartTotalPrice(CART_ID, total)
+        }
     }
 }

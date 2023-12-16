@@ -9,5 +9,20 @@
         android:id="@+id/shopCartFragment"
         android:name="edu.algg.storeapiapp.ui.cart.ShopCartFragment"
         android:label="fragment_shop_cart"
-        tools:layout="@layout/fragment_shop_cart" />
+        tools:layout="@layout/fragment_shop_cart" >
+        <action
+            android:id="@+id/action_shopCartFragment_to_editCartNameFragment"
+            app:destination="@id/editCartNameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editCartNameFragment"
+        android:name="edu.algg.storeapiapp.ui.cartName.EditCartNameFragment"
+        android:label="fragment_edit_cart_name"
+        tools:layout="@layout/fragment_edit_cart_name">
+        <argument
+            android:name="cartName"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

@@ -40,9 +40,6 @@ class ShopCartFragment : Fragment() {
             onIncrease = { product -> viewModel.increaseProductQuantity(product.id) },
             onDecrease = { product -> viewModel.decreaseProductQuantity(product.id) }
         )
-
-
-        // Establecer un LayoutManager
         binding.rvCartItems.layoutManager = LinearLayoutManager(context)
 
         binding.rvCartItems.adapter = adapter
@@ -52,6 +49,17 @@ class ShopCartFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     adapter.submitList(it.products)
+                }
+            }
+        }
+
+        viewModel.fetchCartName()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    binding.tvCartName.text = uiState.name
+                    // Actualizar otros elementos de UI si es necesario
                 }
             }
         }

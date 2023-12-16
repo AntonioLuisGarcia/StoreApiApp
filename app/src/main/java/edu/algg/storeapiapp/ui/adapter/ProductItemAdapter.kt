@@ -13,7 +13,6 @@ import edu.algg.storeapiapp.databinding.ProductItemLayoutBinding
 
 class ProductItemAdapter(private val context: Context, private val onClick:((View, Product) ->Unit)):ListAdapter<Product, ProductItemAdapter.ProductViewHolder>(DIFF_CALLBACK) {
 
-
     interface OnProductClickListener {
         fun onProductClicked(product: Product)
     }
@@ -44,13 +43,7 @@ class ProductItemAdapter(private val context: Context, private val onClick:((Vie
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        //val product = getItem(position)
-        //holder.showProduct(product)
-
         holder.showProduct(getItem(position))
-        /*holder.itemView.setOnClickListener {
-            listener?.onProductClicked(product)
-        }*/
     }
 
 }

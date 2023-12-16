@@ -5,14 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.algg.storeapiapp.R
-
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import edu.algg.storeapiapp.databinding.FragmentEditCartNameBinding
+import edu.algg.storeapiapp.ui.cart.ShopCartViewModel
 
 class EditCartNameFragment : Fragment() {
 
+    private lateinit var binding: FragmentEditCartNameBinding
+    private val viewModel: ShopCartViewModel by activityViewModels()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_cart_name, container, false)
+        binding = FragmentEditCartNameBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,6 +26,11 @@ class EditCartNameFragment : Fragment() {
         val currentName = arguments?.let {
             EditCartNameFragmentArgs.fromBundle(it).cartName
         }
-        // Establece el nombre actual en el EditText y maneja el botón de guardar
+        binding.etCartName.setText(currentName)
+        binding.btnSaveCartName.setOnClickListener {
+            val newName = binding.etCartName.text.toString()
+            viewModel.changeCartName(newName)
+            findNavController().popBackStack()
+        }
     }
 }
