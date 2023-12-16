@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">StoreApiApp</string>
-    <string name="store">Tienda</string>
+    <string name="store">Store</string>
     <string name="shoppingcart">ShoppingCart</string>
     <string name="nombre_del_producto">Name of Product</string>
     <string name="descripci_n_del_producto">Description of Product</string>
@@ -14,4 +14,5 @@
     <string name="add">Add</string>
     <string name="nombre_del_carrito">Cart Name</string>
     <string name="editar">Edit</string>
+    <string name="products">Products</string>
 </resources>
