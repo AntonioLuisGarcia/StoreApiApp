@@ -26,7 +26,7 @@
 - Uso de ViewModel y Observables: A lo largo de toda la App uso ViewModel, StateFlow, y Flow
 - Uso de Corrutinas: He usado corrutinas por la mayor parte de la App para mejorar la experiencia del Usuario
 - Uso de Librerías Adicionales: Se usan librerias como Hilt, Coil, Retrofit y Room.
-- Soporte de Localización: La App detecta la localización y cambiará el idioma, se disponen de 6 idiomas distintos: español, catalan, gallego, inglés, francés y alemán
+- Soporte de Localización: La App detecta la localización y cambiará el idioma, se disponen de 7 idiomas distintos: español, catalan, gallego, inglés, francés, italiano y alemán
 
 
 ## Función de la App
