@@ -1,5 +1,5 @@
 # StoreApiApp
-![Logo_de_la_App]
+![Logo_de_la_App](C:\Users\Yo\Downloads\DALL·E 2023-12-17 15.10.54 - A sleek and modern logo for an online shopping application. The logo should feature a stylized shopping cart, incorporating elements of digital techno.png)
 
 ## Requisitos
 1. Consuma datos de internet. Se valorará que se consuma más de un recurso .
