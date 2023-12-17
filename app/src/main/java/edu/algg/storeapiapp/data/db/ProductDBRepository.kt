@@ -28,7 +28,7 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
         productDao.update(productEntity)
     }
 
-    // Métodos relacionados con el carrito de compras
+    // Métodos del carrito
 
     fun getCartProducts(cartId: Int): Flow<List<ProductEntity>> {
         return productDao.getProductsForCart(cartId)
@@ -38,20 +38,12 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
         return productDao.getCartById(cartId)
     }
 
-    suspend fun updateCart(cart: ShopCartEntity) {
-        productDao.updateCart(cart)
-    }
-
     suspend fun assignProductToCart(productId: Int, cartId: Int) {
         productDao.assignProductToCart(productId, cartId)
     }
 
     suspend fun removeProductFromCart(productId: Int) {
         productDao.removeProductFromCart(productId)
-    }
-
-    fun getCartWithProducts(cartId: Int): Flow<ShopCartWithProducts> {
-        return productDao.getCartWithProducts(cartId)
     }
 
     fun getProductsInCart(): Flow<List<Product>> {

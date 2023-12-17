@@ -3,13 +3,9 @@ package edu.algg.storeapiapp.data.api.product
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
-
 @Singleton
 class ProductApiRepository @Inject constructor(private val service: ProductService){
-    //  revisar el límite
     suspend fun getAll(): List<ProductApiModel> {
-        // Aquí no necesitas el .productsResponse porque ya estás recibiendo la lista directamente
         val productListResponse = service.api.getAll(20, 0)
         return productListResponse.map { productResponse ->
             ProductApiModel(

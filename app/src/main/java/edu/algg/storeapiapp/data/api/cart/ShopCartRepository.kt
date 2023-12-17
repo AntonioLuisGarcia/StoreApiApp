@@ -2,7 +2,6 @@ package edu.algg.storeapiapp.data.api.cart
 
 import edu.algg.storeapiapp.data.db.ProductDao
 import edu.algg.storeapiapp.data.db.ProductEntity
-import edu.algg.storeapiapp.data.db.ShopCartEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class ShopCartRepository @Inject constructor(private val productDao: ProductDao) {
 
-    // Obtener productos para un carrito específico
+    // Obtener productos para nuestro carrito
     fun getCartProducts(cartId: Int): Flow<List<ProductEntity>> {
         return productDao.getProductsForCart(cartId)
     }
@@ -20,7 +19,7 @@ class ShopCartRepository @Inject constructor(private val productDao: ProductDao)
         productDao.assignProductToCart(productId, cartId)
     }
 
-    // Remover un producto de su carrito
+    // Eliminar un producto de su carrito
     suspend fun removeProductFromCart(productId: Int) {
         productDao.removeProductFromCart(productId)
     }

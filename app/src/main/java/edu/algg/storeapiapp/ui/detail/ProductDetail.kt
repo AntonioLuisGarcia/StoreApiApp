@@ -93,6 +93,10 @@ class ProductDetail : Fragment() {
         binding.buttonAdd.setOnClickListener {
             viewModel.updateProductQuantity(args.productId.toInt(), quantity)
 
+            // Vincular el producto al carrito (suponiendo que ya tienes un carrito con un id específico)
+            val cartId = 1 // El ID del carrito al que quieres asignar el producto
+            viewModel.assignProductToCart(args.productId.toInt(), cartId)
+
             viewModel.productUi.observe(viewLifecycleOwner) { productEntity ->
                 // Establece la cantidad inicial cuando se cargan los detalles del producto
                 quantity = productEntity.quantity
