@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
@@ -29,8 +28,8 @@ interface ProductDao {
     /// CARRITO
 
     // Método para obtener todos los productos en el carrito que deberan tener mas de 0 en cantidad
-    @Query("SELECT * FROM product WHERE quantity > 0")
-    fun getCartProducts(): Flow<List<ProductEntity>>
+    @Query("SELECT * FROM product WHERE cartId = :cartId AND quantity > 0")
+    fun getCartProducts(cartId: Int): Flow<List<ProductEntity>>
 
     // Método para obtener los productos de un carrito por su FK, en esta app solo habrá un carrito
     @Query("SELECT * FROM product WHERE cartId = :cartId")

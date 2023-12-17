@@ -6,6 +6,7 @@ import edu.algg.storeapiapp.data.db.ProductDBRepository
 import edu.algg.storeapiapp.data.db.ProductEntity
 import edu.algg.storeapiapp.data.db.ShopCartEntity
 import edu.algg.storeapiapp.data.db.asProduct
+import edu.algg.storeapiapp.ui.cart.ShopCartViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -75,8 +76,23 @@ class ProductRepository @Inject constructor(
 
     // Propiedad que expone un flujo de productos en el carrito de compras.
     val productsInCart: Flow<List<Product>>
-        get() = dbRepository.getProductsInCart()
+        get() {
+            // Usa el ID del carrito que deseas pasar a la consulta.
+            return dbRepository.getCartProducts(ShopCartViewModel.CART_ID).map { entities ->
+                entities.map { entity ->
+                    entity.asProduct() // Asegúrate de que esta función convierte ProductEntity a Product
+                }
+            }
+        }
 
+
+    fun getProductsInCart(cartId: Int): Flow<List<Product>> {
+        return dbRepository.getCartProducts(cartId).map { entities ->
+            entities.map { entity ->
+                entity.asProduct() // Convierte ProductEntity a Product
+            }
+        }
+    }
 
     suspend fun increaseProductQuantity(productId: Int) {
         val product = dbRepository.getProductDetail(productId)

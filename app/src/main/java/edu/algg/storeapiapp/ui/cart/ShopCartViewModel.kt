@@ -64,10 +64,9 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
     // Función para actualizar los productos en el carrito.
     fun updateCartProducts() {
         viewModelScope.launch {
-            repository.productsInCart.collect { products ->
+            repository.getProductsInCart(CART_ID).collect { products ->
                 _uiState.value = _uiState.value.copy(products = products)
                 calculateTotal()
-                Log.d("ShopCartFragment", "Carrito actualizado con ${products.size} productos.")
             }
         }
     }

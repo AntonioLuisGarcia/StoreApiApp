@@ -38,9 +38,9 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
         return productDao.getTotalPriceInCart()
     }
 
-    fun getCartProducts(cartId: Int): Flow<List<ProductEntity>> {
-        return productDao.getProductsForCart(cartId)
-    }
+    //fun getCartProducts(cartId: Int): Flow<List<ProductEntity>> {
+    //    return productDao.getProductsForCart(cartId)
+    //}
 
     suspend fun getCartById(cartId: Int): ShopCartEntity {
         return productDao.getCartById(cartId)
@@ -54,18 +54,21 @@ class ProductDBRepository @Inject constructor(private val productDao:ProductDao)
         productDao.removeProductFromCart(productId)
     }
 
-    fun getProductsInCart(): Flow<List<Product>> {
-        return productDao.getProductsInCart().map { entities ->
+    fun getProductsInCart(cartId: Int): Flow<List<Product>> {
+        return productDao.getCartProducts(cartId).map { entities ->
             entities.map { entity ->
                 entity.asProduct() // Asegúrate de que esta función devuelva un objeto Product
             }
         }
     }
 
+    fun getCartProducts(cartId: Int): Flow<List<ProductEntity>> {
+        return productDao.getCartProducts(cartId)
+    }
+
     suspend fun updateProductQuantityInCart(productId: Int, quantity: Int) {
         productDao.updateProductQuantityInCart(productId, quantity)
     }
-
 
     suspend fun getCartNameById(cartId: Int): String {
         return productDao.getCartNameById(cartId)
