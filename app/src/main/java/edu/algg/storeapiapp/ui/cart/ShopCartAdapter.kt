@@ -11,10 +11,13 @@ import edu.algg.storeapiapp.R
 import edu.algg.storeapiapp.data.repository.Product
 import edu.algg.storeapiapp.databinding.ProductCartItemBinding
 
+// Clase adaptador para elementos de carrito de compras en un RecyclerView.
 class ShopCartAdapter (private val context: Context, private val onIncrease: (Product) -> Unit, private val onDecrease: (Product) -> Unit) : ListAdapter<Product, ShopCartAdapter.ShopCartViewHolder>(ProductDiffCallback){
-                                                ///mirar tipo/////////
+
+    // Clase interna ViewHolder para gestionar la visualización de un producto en el carrito.
     inner class ShopCartViewHolder(private val binding: ProductCartItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
+            // Si el producto no es nulo, realiza la configuración del elemento.
             if (product != null) {
                 val context = binding.root.context // Obtener el contexto de la vista
                 val formattedPrice = String.format("%.2f", product.price) // Formatea el precio a dos decimales
@@ -28,6 +31,7 @@ class ShopCartAdapter (private val context: Context, private val onIncrease: (Pr
         }
     }
 
+    // Objeto para comparar elementos en la lista y detectar cambios.
     private object ProductDiffCallback: DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product) = oldItem.id == newItem.id
 
@@ -35,6 +39,7 @@ class ShopCartAdapter (private val context: Context, private val onIncrease: (Pr
 
     }
 
+    // Método para crear un ViewHolder.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopCartViewHolder {
         val binding = ProductCartItemBinding.inflate( // verificar si es este xml
             LayoutInflater.from(parent.context),
@@ -43,5 +48,6 @@ class ShopCartAdapter (private val context: Context, private val onIncrease: (Pr
         return ShopCartViewHolder(binding)
     }
 
+    // Método para vincular un producto a un ViewHolder.
     override fun onBindViewHolder(holder: ShopCartViewHolder, position: Int) = holder.bind(getItem(position))
 }

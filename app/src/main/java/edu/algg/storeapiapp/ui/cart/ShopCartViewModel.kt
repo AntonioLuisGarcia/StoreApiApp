@@ -16,29 +16,32 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
-
+// Anotación HiltViewModel para permitir la inyección de dependencias en el ViewModel.
 @HiltViewModel
 class ShopCartViewModel @Inject constructor(private val repository: ProductRepository, private val productDao: ProductDao): ViewModel() {
 
+    // Estado interno mutable del ViewModel.
     private val _uiState = MutableStateFlow(ShopCartUIState(name = "Mi Carrito", products = listOf(), totalPrice = 0.0))
+
+    // Estado expuesto inmutable para ser observado por la UI.
     val uiState: StateFlow<ShopCartUIState>
         get() = _uiState.asStateFlow()
 
 
     init {
+        // Inicialización del ViewModel.
         viewModelScope.launch {
             try {
-                // Crear un carrito si no existe
+                // Crea un carrito si no existe y actualiza la lista de productos.
                 createCartIfNotExists()
                 repository.refreshList()
             } catch (e: IOException) {
                 _uiState.value = _uiState.value.copy(errorMessage = e.message!!)
             }
-
         }
     }
 
-
+    // Función para crear un carrito si no existe.
     private suspend fun createCartIfNotExists() {
         val existingCart = productDao.getCartById(CART_ID) // CART_ID es el ID del carrito
         if (existingCart == null) {
@@ -47,10 +50,12 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
         }
     }
 
+    // Constante para el ID del carrito.
     companion object {
         const val CART_ID = 1 // ID constante para el único carrito
     }
 
+    // Función para actualizar el precio total del carrito.
     fun updateTotalPrice() {
         viewModelScope.launch {
             // Si 'getTotalPriceInCart()' es 'null', se utilizará '0.0' como valor por defecto.
@@ -60,6 +65,7 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
         }
     }
 
+    // Función para actualizar los productos en el carrito.
     fun updateCartProducts() {
         viewModelScope.launch {
             repository.productsInCart.collect { products ->
@@ -70,6 +76,7 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
         }
     }
 
+    // Función para incrementar la cantidad de un producto.
     fun increaseProductQuantity(productId: Int) {
         viewModelScope.launch {
             val updatedProducts = _uiState.value.products.map { product ->
@@ -109,12 +116,14 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
         }
     }
 
+    // Función para eliminar un producto del carrito.
     suspend fun deleteProductFromCart(productId: Int) {
         withContext(Dispatchers.IO) {
             productDao.deleteProductFromCart(productId)
         }
     }
 
+    // Función para obtener el nombre del carrito.
     fun fetchCartName() {
         viewModelScope.launch {
             val cartName = productDao.getCartNameById(CART_ID)
@@ -122,6 +131,7 @@ class ShopCartViewModel @Inject constructor(private val repository: ProductRepos
         }
     }
 
+    // Función para cambiar el nombre del carrito.
     fun changeCartName(newName: String) {
         viewModelScope.launch {
             // Actualiza el nombre del carrito en la base de datos

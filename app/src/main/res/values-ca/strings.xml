@@ -17,8 +17,9 @@
     <string name="products">Productes</string>
     <string name="share_cart">Compartir carret</string>
     <string name="categoria_con_placeholder">Categoria: %1$s</string>
-    <string name="price_con_placeholder">$ %1$s</string>
+    <string name="price_con_placeholder">Preu: $ %1$s</string>
     <string name="count_con_placeholder">Ressenyes: %1$s</string>
     <string name="total_price_con_placeholder">Total: $ %1$s</string>
+    <string name="quantity_con_placeholder">Quantitat: %1$s</string>
 
 </resources>
