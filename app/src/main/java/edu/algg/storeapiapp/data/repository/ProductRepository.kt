@@ -4,6 +4,7 @@ import edu.algg.storeapiapp.data.api.product.ProductApiRepository
 import edu.algg.storeapiapp.data.api.product.asEntityModel
 import edu.algg.storeapiapp.data.db.ProductDBRepository
 import edu.algg.storeapiapp.data.db.ProductEntity
+import edu.algg.storeapiapp.data.db.ShopCartEntity
 import edu.algg.storeapiapp.data.db.asProduct
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -39,6 +40,14 @@ class ProductRepository @Inject constructor(
         }
     }
 
+    suspend fun createCartIfNotExists(cartId: Int, cartName: String) {
+        val existingCart = dbRepository.getCartById(cartId)
+        if (existingCart == null) {
+            val newCart = ShopCartEntity(id = cartId, name = cartName, totalPrice = 0.0)
+            dbRepository.insertCart(newCart)
+        }
+    }
+
     // Función suspendida para obtener los detalles de un producto por ID.
     suspend fun getProduct(id:Int):ProductEntity{
         return dbRepository.getProductDetail(id)
@@ -60,8 +69,38 @@ class ProductRepository @Inject constructor(
         }
     }
 
+    suspend fun getTotalPriceInCart(): Double? {
+        return dbRepository.getTotalPriceInCart()
+    }
+
     // Propiedad que expone un flujo de productos en el carrito de compras.
     val productsInCart: Flow<List<Product>>
         get() = dbRepository.getProductsInCart()
 
+
+    suspend fun increaseProductQuantity(productId: Int) {
+        val product = dbRepository.getProductDetail(productId)
+        dbRepository.updateProductQuantityInCart(productId, product.quantity + 1)
+    }
+
+    suspend fun decreaseProductQuantity(productId: Int) {
+        val product = dbRepository.getProductDetail(productId)
+        if (product.quantity > 1) {
+            dbRepository.updateProductQuantityInCart(productId, product.quantity - 1)
+        } else {
+            dbRepository.removeProductFromCart(productId)
+        }
+    }
+
+    suspend fun getCartName(cartId: Int): String {
+        return dbRepository.getCartNameById(cartId)
+    }
+
+    suspend fun changeCartName(cartId: Int, newName: String) {
+        dbRepository.updateCartName(cartId, newName)
+    }
+
+    suspend fun calculateTotalPrice(): Double {
+        return dbRepository.getTotalPriceInCart() ?: 0.0
+    }
 }

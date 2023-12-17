@@ -41,7 +41,7 @@ class ShopCartAdapter (private val context: Context, private val onIncrease: (Pr
 
     // Método para crear un ViewHolder.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopCartViewHolder {
-        val binding = ProductCartItemBinding.inflate( // verificar si es este xml
+        val binding = ProductCartItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
