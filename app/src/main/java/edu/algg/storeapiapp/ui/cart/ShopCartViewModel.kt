@@ -1,18 +1,13 @@
 package edu.algg.storeapiapp.ui.cart
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import edu.algg.storeapiapp.data.db.ProductDao
-import edu.algg.storeapiapp.data.db.ShopCartEntity
 import edu.algg.storeapiapp.data.repository.ProductRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 

@@ -104,6 +104,7 @@ class ProductRepository @Inject constructor(
         if (product.quantity > 1) {
             dbRepository.updateProductQuantityInCart(productId, product.quantity - 1)
         } else {
+            dbRepository.updateProductQuantityInCart(productId, product.quantity - 1)
             dbRepository.removeProductFromCart(productId)
         }
     }
