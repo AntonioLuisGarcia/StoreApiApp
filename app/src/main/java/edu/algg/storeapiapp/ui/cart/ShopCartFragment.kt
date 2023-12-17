@@ -90,8 +90,8 @@ class ShopCartFragment : Fragment() {
             val cartTotal = viewModel.uiState.value.totalPrice
 
             // Formatear el título y subtítulo con la información del carrito
-            val title = "Nombre del Carrito: $cartName"
-            val subtitle = "Total del Carrito: $${String.format("%.2f", cartTotal)}"
+            val title = getString(R.string.cart_name_con_placeholder,cartName)
+            val subtitle = getString(R.string.total_price_con_placeholder, cartTotal.toString())
             val productsText = getShareableText(viewModel.uiState.value.products, requireContext())
 
             // Combinar título, subtítulo y el texto de los productos

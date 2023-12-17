@@ -21,6 +21,6 @@
     <string name="count_con_placeholder">Bewertungen: %1$s</string>
     <string name="total_price_con_placeholder">Summe: $ %1$s</string>
     <string name="quantity_con_placeholder">Menge: %1$s</string>
-
+    <string name="cart_name_con_placeholder">Mein Wagen: %1$s</string>
 
 </resources>

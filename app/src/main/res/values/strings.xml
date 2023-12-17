@@ -20,5 +20,6 @@
     <string name="count_con_placeholder">Reseñas: %1$s</string>
     <string name="total_price_con_placeholder">Total: $ %1$s</string>
     <string name="quantity_con_placeholder">Cantidad: %1$s</string>
+    <string name="cart_name_con_placeholder">Nombre del Carrito: %1$s</string>
 
 </resources>
